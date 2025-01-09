@@ -31,3 +31,10 @@ def chat_generate_text(
     )
 
     return response.choices[0].message
+
+def generate_text_with_conversation(messages, model = 'gpt-4o'):
+    response = client.chat.completions.create(
+        model=model,
+        messages=messages
+    )
+    return response.choices[0].message.content
