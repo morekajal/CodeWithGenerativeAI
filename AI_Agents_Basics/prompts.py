@@ -19,7 +19,13 @@ Example session:
 
 Question : Should I take an umbrella with me today in California?
 Tought : I should check the weather in California first.
-Action : get_weather : California
+Action : 
+
+{
+    "function_name": "get_weather",
+    "function_params":{
+    "city":"California"}
+}
 
 PAUSE
 
