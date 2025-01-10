@@ -1,0 +1,10 @@
+User: who won the last world cricket world cup?
+Assistant: As of my last update in October 2023, the most recent ICC Men's Cricket World Cup took place in 2023, and India won the tournament, defeating Australia in the final. Please verify with the latest sources for any updates or changes.
+User: who was the captain of both the teams?
+Assistant: In the 2023 ICC Men's Cricket World Cup final, the captain of India was Rohit Sharma, and the captain of Australia was Pat Cummins.
+User: who was the coach of indian team?
+Assistant: As of the 2023 ICC Men's Cricket World Cup, the head coach of the Indian cricket team was Rahul Dravid.
+User: where the final was held?
+Assistant: The final of the 2023 ICC Men's Cricket World Cup was held at the Narendra Modi Stadium in Ahmedabad, India.
+User: When will be next world cup held?
+Assistant: The next ICC Men's Cricket World Cup is scheduled to be held in 2027. The tournament will be co-hosted by South Africa, Zimbabwe, and Namibia. Please check for updates as the date approaches, as details may change.
