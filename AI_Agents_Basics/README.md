@@ -1,1 +1,3 @@
 This is a simple helpful project covering basics of openai usage and exploring the usage of AI Agents
+The have followed the udemy project to gain the conceptual understanding of AI Agents.
+You can check other code and projects at : https://github.com/hassancs91/AI-Agents-Course
