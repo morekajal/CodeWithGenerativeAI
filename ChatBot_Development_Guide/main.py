@@ -22,17 +22,20 @@ chat_log = [{'role' : 'system',
 
 }]
 
+chat_responses = []
+
 @app.get("/", response_class=HTMLResponse)
 async def chat_page(request: Request):
     # return templates.TemplateResponse("layout.html", {"request":request})
     return templates.TemplateResponse("home.html", {"request":request})
 
 
-@app.post("/")
-async def chat(user_input: Annotated[str, Form()]):
+@app.post("/", response_class=HTMLResponse)
+async def chat(request:Request, user_input: Annotated[str, Form()]):
 
     chat_log.append({'role': 'user', 'content': user_input})
-    
+    chat_responses.append(user_input)
+
     response = client.chat.completions.create(
     model="gpt-4o-mini",
     messages=chat_log,
@@ -42,5 +45,8 @@ async def chat(user_input: Annotated[str, Form()]):
 
     bot_response = response.choices[0].message.content
     chat_log.append({'role':'assistant', 'content':bot_response})
-    
-    return bot_response
+    chat_responses.append(bot_response)
+
+    # return bot_response
+    return templates.TemplateResponse("home.html", {"request":request, "chat_responses":chat_responses})
+
