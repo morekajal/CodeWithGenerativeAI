@@ -50,3 +50,21 @@ async def chat(request:Request, user_input: Annotated[str, Form()]):
     # return bot_response
     return templates.TemplateResponse("home.html", {"request":request, "chat_responses":chat_responses})
 
+@app.get("/image", response_class=HTMLResponse)
+async def image_page(request: Request):
+    return templates.TemplateResponse("image.html", {"request":request})
+
+@app.post("/image", response_class=HTMLResponse)
+async def create_image(request: Request, user_input: Annotated[str, Form()]):
+
+    response = client.images.generate(
+    model="dall-e-3",
+    prompt=user_input,
+    size="1024x1024",
+    # quality="standard",
+    n=1,
+)
+
+    image_url = response.data[0].url
+    return templates.TemplateResponse("image.html", {"request":request, "image_url":image_url})
+
