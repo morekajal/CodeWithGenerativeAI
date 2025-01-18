@@ -2,7 +2,7 @@
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
-from fastapi import FastAPI, Form, Request
+from fastapi import FastAPI, Form, Request, WebSocket
 from typing import Annotated
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
@@ -15,6 +15,15 @@ client = OpenAI(api_key=api_key)
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
+chat_responses = []   # to keep our chat history alive on UI
+
+
+@app.get("/", response_class=HTMLResponse)
+async def chat_page(request: Request):
+    # return templates.TemplateResponse("layout.html", {"request":request})
+    return templates.TemplateResponse("home.html", {"request":request, "chat_responses":chat_responses})
+
+
 chat_log = [{'role' : 'system',
              'content' : 'You are a Python tutor AI, completely dedicated to teach users how to learn Python from scratch. \
                 Please provide clear instructions on Python concepts, best practices and syntax \
@@ -22,14 +31,32 @@ chat_log = [{'role' : 'system',
 
 }]
 
-chat_responses = []
+# chat_responses = []
 
-@app.get("/", response_class=HTMLResponse)
-async def chat_page(request: Request):
-    # return templates.TemplateResponse("layout.html", {"request":request})
-    return templates.TemplateResponse("home.html", {"request":request})
+## Add WebSocket API
+@app.websocket("/ws")
+async def chat(websocket: WebSocket):
+    await websocket.accept()                            
+    while True:
+        user_input = await websocket.receive_text()
+        chat_log.append({'role':'user', 'content':user_input})
+        chat_responses.append(user_input)
 
+        try:
+            response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=chat_log,
+            temperature=0.5, 
+            max_tokens = 50
+            )
 
+            bot_response = response.choices[0].message.content
+            await websocket.send_text(bot_response)
+
+        except Exception as e:
+            await websocket.send_text(f"Error: {str(e)}")
+            break
+   
 @app.post("/", response_class=HTMLResponse)
 async def chat(request:Request, user_input: Annotated[str, Form()]):
 
@@ -67,4 +94,3 @@ async def create_image(request: Request, user_input: Annotated[str, Form()]):
 
     image_url = response.data[0].url
     return templates.TemplateResponse("image.html", {"request":request, "image_url":image_url})
-
