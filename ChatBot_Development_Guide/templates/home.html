@@ -4,26 +4,46 @@
     <h3>
         Add input to chat with personal chatbot
     </h3>
-    <form action="/" method="POST">
-        <div>
-            <textarea class="form-control" placeholder="Add input here" name="user_input" rows=""3></textarea>
-            <button class="btn btn-primary mt-1" type="submit">Send</button>
-        </div>
-    </form>
+    
 
     <div>
         <div class="card text-center mt-3">
             <div class="card-header">
                 Chat History:
             </div>
-            <div class=card-body>
-                {% for response in chat_responses %}
-                <div>
-                    - {{response}}
-                </div>
-                {% endfor %}
+            <div class="card-body" id="chatHistory">
+                <!-- Auto populate here from websocket-->
+
+                
             </div>
         </div>
     </div>
 
+    <div class="container" id="footer">
+        <div class="input-group mb-3">
+            <input class="form-control" placeholder="Add input here" id="userInput">
+            <button class="btn btn-outline-primary" type="button" id="sendButton">Send</button>
+        </div>
+    </div>
+
 </div>
+
+<script>
+    var ws = new WebSocket("ws://localhost:8000/ws");
+    var sendButton = document.getElementById("sendButton");
+    var userInput = document.getElementById("userInput");
+    var chatHistory = document.getElementById("chatHistory");
+
+    ws.onmessage = function(event){
+        var message = event.data;
+        var messageDiv = document.createElement("div");
+        messageDiv.textContent = "- " + message;
+        chatHistory.appendChild(messageDiv);
+    };
+
+    sendButton.onclick = function() {
+        var message = userInput.value;
+        ws.send(message);
+        userInput.value = "";            //clear input field after sending
+    };
+</script>
