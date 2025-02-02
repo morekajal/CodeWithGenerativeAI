@@ -2,3 +2,5 @@
 
 Week 1:
 - Will try to setup openai api key, understand how to load the dotenv(), and build an application using BeautifulSoap to scrap a webpage url and generate summary of that webpage setting up openai model (gpt-4o-mini) with messages of system prompt and user prompt.
+- Create a product that can generate marketing brochures about a company with streaming response.
+- 
