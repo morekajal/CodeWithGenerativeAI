@@ -7,4 +7,4 @@ Week 1 :
 Week 2 :
 - Will build a User Interface (UI) for our company brochure task with Gradio and play along the gradio arguments and different function calls
 - We will learn how can we use LLM model as input function to gradio and get the response of LLM as output on gradio UI
-- Develop a chatbot assistant by setting up relevant system prompts
+- Develop a chatbot assistant by setting up relevant system prompts for an Airline to have queries solved like the price between source and destinations, timings and done some improvements by using multimodal approach.
