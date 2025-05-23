@@ -1,0 +1,51 @@
+- From " The Complete Agentic AI Engineering Course (2025) "
+
+- UV Package Manager
+    - https://docs.astral.sh/uv/
+
+- Create a UV-managed virtual environment
+    - uv venv
+-  Activate the environment on PowerShell (Windows):
+    - .venv\Scripts\activate
+
+- Create .toml file with installation dependencies
+    - uv sync   ----> To install dependencies
+
+WEEK 1 : Foundations
+1. Make Agentic Workflow
+2. Agent and Agentic Patterns/Architetures.
+    - AI Agents are programs where LLM outputs control the workflow.
+    - AI agents can have 
+        1. Multiple LLM calls
+        2. LLMs with ability to use Tools
+        3. An environment where LLMs interact
+        4. A Planner to coordinate activities
+        5. Autonomy
+    - https://www.anthropic.com/engineering/building-effective-agents
+    - Agentic Systems can be broadly classified as : [but their is a blur line to distinguish between Workflows and Agents]
+        1. Workflows : the systems where LLMs and tools are orchestrated through predefined code paths
+            a. Prompt Chaining : Decomposes into Fixed sub-tasks (each LLM is prompted with certain question and that output is passed to another LLM in the chain to acheive desired output)
+            b. Routing : Direct an input into a specialized sub task, ensuring separation of concerns
+                [Input -> LLM Router -> LLM1 .... LLMn -> Output]
+
+            c. Parallelization : Breaking down tasks and running multiple subtasks concurrently.
+                [Input -> Coordinator -> LLM1 .... LLMn -> Aggregator -> Output]
+                - Here Coordinator and Aggregator are our own code of logic
+            d. orchestrator Worker : Complex tasks are broken down dynamically and combined.
+                [Input -> Orchestrator -> LLM1 .... LLMn -> Synthesizer -> Output]
+                - Here Orchestrator and Synthesizer are LLM models to break down complex tasks in smaller steps
+            e. Evaluator Optimizer : LLM output is validated by another 
+                [Input -> LLM Generator (-> Solution / Rejected with feedback <-) LLM Evaluator -> (Accepted) Output]
+
+        2. Agents : the systems where LLMs dynamically direct their own processes and tools usage, maintaining control over how they accomplish tasks
+            - By contrast, in Agents the process is quite Open ended, has Feedback loops, and No Fixed paths
+
+            [Human -> LLM call  -> (Action/Feedback/STOP) Environment]
+
+    - Risks of Agent Frameworks 
+        1. Unpredictable paths
+        2. Unpredictable output
+        3. Unpredictable costs
+        4. Monitoring on the models
+        5. Guardrails (the kind of protections that we can write in software that makes sure that your models are doing what they should be doing, or not leaving some rails.)
+            - Guardrails ensures your agents behave safely, consistently, and withing your intented boundaries.
